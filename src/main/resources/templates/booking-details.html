@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Booking Details | Railway Admin</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e8efff, #f5f7fb);
+            color: #263238;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid #1769aa;
+        }
+
+        h1 {
+            text-align: center;
+            color: #102a56;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .section-title {
+            color: #1769aa;
+            font-size: 18px;
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e5eaf2;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .detail {
+            background: #f7f9fc;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #edf0f5;
+        }
+
+        .detail strong {
+            display: block;
+            color: #718096;
+            font-size: 12px;
+            margin-bottom: 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail span {
+            color: #263238;
+            font-size: 15px;
+            font-weight: 600;
+            overflow-wrap: anywhere;
+        }
+
+        .pnr {
+            background: #edf5ff;
+            border: 1px solid #c9def8;
+        }
+
+        .pnr span {
+            color: #1769aa;
+            font-size: 18px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: #e8f8ef;
+            color: #16834a !important;
+            font-size: 13px !important;
+        }
+
+        .cancelled {
+            background: #fff0f0;
+            color: #c62828 !important;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 180px;
+            padding: 13px 16px;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .download-btn {
+            background: #1769aa;
+            color: white;
+        }
+
+        .download-btn:hover {
+            background: #102a56;
+            transform: translateY(-2px);
+        }
+
+        .dashboard-btn {
+            background: #edf2f7;
+            color: #34445a;
+        }
+
+        .dashboard-btn:hover {
+            background: #dce5ef;
+        }
+
+        .cancel-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .cancel-btn:hover {
+            background: #b02a37;
+        }
+
+        @media (max-width: 550px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            .container {
+                padding: 22px 18px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Booking Details</h1>
+        <p class="subtitle">Railway Reservation Admin Panel</p>
+
+        <h3 class="section-title">Passenger Information</h3>
+
+        <div class="details-grid">
+
+            <div class="detail pnr">
+                <strong>PNR Number</strong>
+                <span th:text="${booking.pnr}"></span>
+            </div>
+
+            <div class="detail">
+                <strong>Passenger Name</strong>
+                <span th:text="${booking.passengerName}"></span>
+            </div>
+
+            <div class="detail">
+                <strong>Email Address</strong>
+                <span th:text="${booking.email}"></span>
+            </div>
+
+            <div class="detail">
+                <strong>Age</strong>
+                <span th:text="${booking.age}"></span>
+            </div>
+
+        </div>
+
+        <h3 class="section-title">Train Information</h3>
+
+        <div class="details-grid">
+
+            <div class="detail">
+                <strong>Train Number</strong>
+                <span th:text="${booking.train.trainNumber}"></span>
+            </div>
+
+            <div class="detail">
+                <strong>Train Name</strong>
+                <span th:text="${booking.train.trainName}"></span>
+            </div>
+
+            <div class="detail">
+                <strong>Source</strong>
+                <span th:text="${booking.train.source}"></span>
+            </div>
+
+            <div class="detail">
+                <strong>Destination</strong>
+                <span th:text="${booking.train.destination}"></span>
+            </div>
+
+            <div class="detail">
+                <strong>Journey Date</strong>
+                <span th:text="${booking.journeyDate}"></span>
+            </div>
+
+            <div class="detail">
+                <strong>Departure Time</strong>
+                <span th:text="${booking.train.departureTime}"></span>
+            </div>
+
+            <div class="detail">
+                <strong>Arrival Time</strong>
+                <span th:text="${booking.train.arrivalTime}"></span>
+            </div>
+
+            <div class="detail">
+                <strong>Number of Seats</strong>
+                <span th:text="${booking.numberOfSeats}"></span>
+            </div>
+
+            <div class="detail">
+                <strong>Booking Status</strong>
+                <span class="status"
+                      th:classappend="${booking.status == 'CANCELLED'} ? 'cancelled' : ''"
+                      th:text="${booking.status}">
+                </span>
+            </div>
+
+        </div>
+
+        <div th:if="${booking.status == 'CONFIRMED'}">
+
+            <form th:action="@{/admin/cancel-booking/{pnr}(pnr=${booking.pnr})}"
+                  method="post">
+
+                <button type="submit"
+                        class="cancel-btn"
+                        onclick="return confirm('Are you sure you want to cancel this booking?')">
+                    Cancel Booking
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="actions">
+
+            <a th:href="@{/download-ticket(pnr=${booking.pnr})}"
+               class="btn download-btn">
+                Download PDF Ticket
+            </a>
+
+            <a th:href="@{/admin/dashboard}"
+               class="btn dashboard-btn">
+                Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

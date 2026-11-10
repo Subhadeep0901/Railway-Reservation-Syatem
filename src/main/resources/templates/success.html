@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Booking Confirmation</title>
+
+    <link rel="stylesheet" th:href="@{/css/success.css}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="success-icon">✓</div>
+
+        <h1>Booking Confirmation</h1>
+
+        <p class="subtitle">
+            Your railway ticket booking details
+        </p>
+
+        <div th:if="${booking != null}">
+
+            <div class="pnr">
+                <span>PNR Number</span>
+                <h2 th:text="${booking.pnr}"></h2>
+            </div>
+
+            <div class="details">
+
+                <h2>Passenger Details</h2>
+
+                <div class="detail-row">
+                    <span>Passenger Name</span>
+                    <strong th:text="${booking.passengerName}"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Email</span>
+                    <strong th:text="${booking.email}"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Age</span>
+                    <strong th:text="${booking.age}"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Number of Seats</span>
+                    <strong th:text="${booking.numberOfSeats}"></strong>
+                </div>
+
+                <h2>Train Details</h2>
+
+                <div class="detail-row">
+                    <span>Train Number</span>
+                    <strong th:text="${booking.train.trainNumber}"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Train Name</span>
+                    <strong th:text="${booking.train.trainName}"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Source</span>
+                    <strong th:text="${booking.train.source}"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Destination</span>
+                    <strong th:text="${booking.train.destination}"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Journey Date</span>
+                    <strong th:text="${booking.journeyDate}"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Departure Time</span>
+                    <strong th:text="${booking.train.departureTime}"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Arrival Time</span>
+                    <strong th:text="${booking.train.arrivalTime}"></strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Booking Status</span>
+
+                    <strong
+                        th:text="${booking.status}"
+                        th:class="${booking.status == 'CONFIRMED'} ? 'status-confirmed' : 'status-cancelled'">
+                    </strong>
+                </div>
+
+            </div>
+
+            <div th:if="${booking.status == 'CONFIRMED'}"
+                 class="cancel-section">
+
+                <form th:action="@{/cancel-ticket}" method="post">
+
+                    <input type="hidden"
+                           name="pnr"
+                           th:value="${booking.pnr}">
+
+                    <button type="submit" class="cancel-btn">
+                        Cancel Ticket
+                    </button>
+
+                </form>
+
+            </div>
+
+            <div class="actions">
+
+                <a th:href="@{/download-ticket(pnr=${booking.pnr})}"
+                   class="download-btn">
+                    Download PDF Ticket
+                </a>
+
+                <a th:href="@{/}" class="home-btn">
+                    Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+        <p th:if="${error}" class="error-message"
+           th:text="${error}">
+        </p>
+
+    </div>
+
+</body>
+</html>

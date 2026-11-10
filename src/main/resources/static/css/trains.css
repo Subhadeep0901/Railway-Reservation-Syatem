@@ -1,0 +1,208 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(120deg, #071a35, #075985);
+    color: white;
+    padding: 30px 6%;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #cbd5e1;
+    font-size: 15px;
+}
+
+/* Main container */
+.container {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 25px;
+}
+
+.page-title {
+    color: #075985;
+    font-size: 27px;
+    margin-bottom: 20px;
+}
+
+/* Journey date */
+.search-summary {
+    background: white;
+    padding: 18px 22px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    border-left: 5px solid #0284c7;
+}
+
+/* Table container */
+.table-container {
+    background: white;
+    padding: 20px;
+    border-radius: 13px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    overflow-x: auto;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 950px;
+}
+
+thead {
+    background: #075985;
+    color: white;
+}
+
+th {
+    padding: 16px 12px;
+    text-align: center;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+td {
+    padding: 16px 12px;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 14px;
+}
+
+tbody tr:hover {
+    background: #eff6ff;
+}
+
+.train-name {
+    color: #075985;
+    font-weight: 700;
+}
+
+/* Available seats */
+.seat-info {
+    display: inline-block;
+    background: #dcfce7;
+    color: #15803d;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+}
+
+.no-seats {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* Book button */
+.book-btn {
+    display: inline-block;
+    background: #0284c7;
+    color: white;
+    padding: 10px 17px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.book-btn:hover {
+    background: #075985;
+    transform: translateY(-2px);
+}
+
+/* Seats full */
+.full-btn {
+    display: inline-block;
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 9px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* No trains */
+.no-trains {
+    background: white;
+    text-align: center;
+    padding: 45px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.no-trains h3 {
+    color: #dc2626;
+    font-size: 23px;
+    margin-bottom: 12px;
+}
+
+.no-trains p {
+    color: #64748b;
+}
+
+/* Back button */
+.back-btn {
+    display: inline-block;
+    margin: 25px 0;
+    background: #334155;
+    color: white;
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 7px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    background: #1e293b;
+}
+
+/* Footer */
+footer {
+    background: #071a35;
+    color: #cbd5e1;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+    .header h1 {
+        font-size: 23px;
+    }
+
+    .container {
+        padding: 0 12px;
+        margin-top: 25px;
+    }
+
+    .page-title {
+        font-size: 22px;
+    }
+
+    .table-container {
+        padding: 10px;
+    }
+}

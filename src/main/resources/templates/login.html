@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmls:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0f2027, #203a70, #2c5364);
+    padding: 20px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    padding: 40px 35px;
+    border-radius: 15px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+}
+
+.login-container h2 {
+    color: #203a70;
+    text-align: center;
+    font-size: 27px;
+    margin-bottom: 10px;
+}
+
+.login-container h3 {
+    color: #666;
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    outline: none;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+input:focus {
+    border-color: #203a70;
+    box-shadow: 0 0 5px rgba(32, 58, 112, 0.3);
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    background: #203a70;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #14264d;
+    transform: translateY(-2px);
+}
+
+.error-message {
+    color: #d93025;
+    background: #fdecea;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.success-message {
+    color: #188038;
+    background: #e6f4ea;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 30px 22px;
+    }
+
+    .login-container h2 {
+        font-size: 23px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <h1>Railway Reservation System</h1>
+    <h3>Admin Login</h3>
+    <p th:if="${param.error}" style="color:red;">Invalid user name or password!</p>
+    <p th:if="${param.logout}" style="color:green;">LOgged out successfully!</p>
+    <form th:action="@{/admin/login}" method="post">
+        <label>Username:</label>
+        <input type="text" name="username" required>
+        <br>
+        <label>Password:</label>
+        <input type="password" name="password" required>
+        <br>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>

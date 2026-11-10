@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway Reservation System</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+    
+<div style="text-align:right; padding:15px;">
+
+    <div th:if="${session.passengerId != null}">
+        <h3>
+            Welcome,
+            <span th:text="${session.passengerName}"></span>!
+        </h3>
+
+        <form th:action="@{/passenger/logout}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+
+    <div th:unless="${session.passengerId != null}">
+        <a th:href="@{/passenger/login}">Passenger Login</a>
+        |
+        <a th:href="@{/register}">Register</a>
+    </div>
+
+</div>
+
+
+  <h1>Railway Reservation Syatem</h1>
+    <p th:if="${mesage}"
+    th:text="${message}"
+    style="color:green;">
+</p>
+<p th:if="${mesage}"
+    th:text="${error}"
+    style="color:red;">
+</p>
+    <h2>search your Train</h2>
+    <form th:action="@{/search-trains}" method="get">
+        <label>Source Station:</label>
+        <input type="text" name="source" placeholder="Enter source station" required>
+        <br>
+        <label>Destination Station:</label>
+        <input type="text" name="destination" placeholder="Enter destination station" required>
+        <br>
+        <label>Journey Date:</label>
+        <input type="date" name="journeyDate" required>
+        <br>
+        <button type="submit">Search Trains</button>
+    </form>
+    <h2>Check Your Booking</h2>
+    <form th:action="@{/search-booking}" method="get">
+        <label>Enter PNR Number:</label>
+        <input type="text" name="pnr" placeholder="Enter your PNR" required>
+        <br>
+        <button type="submit">Search Booking</button>
+    </form>
+    <h2>Admin Panel</h2>
+    <a th:href="@{/admin}">Open Admin Panel</a>
+</body>
+</html>

@@ -1,0 +1,560 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Railway Admin Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 30px;
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        h1, h2 {
+            color: #222;
+        }
+
+        .dashboard {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            width: 190px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px #ccc;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #555;
+        }
+
+        .card p {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .message {
+            color: green;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
+        .booking-controls {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .booking-controls input,
+        .booking-controls select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .booking-controls input {
+            width: 280px;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            min-width: 850px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #222;
+            color: white;
+        }
+
+        tbody tr:hover {
+            background: #f1f3f5;
+        }
+
+        .confirmed {
+            color: green;
+            font-weight: bold;
+        }
+
+        .cancelled {
+            color: red;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 9px 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .cancel-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .cancel-btn:hover {
+            background: #b02a37;
+        }
+
+        .logout-btn {
+            background: #222;
+            color: white;
+        }
+
+        .logout-btn:hover {
+            background: #444;
+        }
+
+        .details-btn {
+            display: inline-block;
+            background: #203a70;
+            color: white;
+            padding: 9px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 6px;
+        }
+
+        .details-btn:hover {
+            background: #14264d;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .pagination button {
+            background: #203a70;
+            color: white;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: #14264d;
+        }
+
+        .pagination button:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+
+        .navigation {
+            margin-top: 30px;
+        }
+
+        .navigation a {
+            display: inline-block;
+            margin-right: 15px;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            background: #203a70;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .navigation a:hover {
+            background: #14264d;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                margin: 15px;
+            }
+
+            .card {
+                width: 100%;
+            }
+
+            .booking-controls input {
+                width: 100%;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <div class="admin-header">
+
+        <h1>Railway Admin Dashboard</h1>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">
+                Logout
+            </button>
+        </form>
+
+    </div>
+
+    <!-- Messages -->
+
+    <p th:if="${message}" th:text="${message}" class="message"></p>
+    <p th:if="${error}" th:text="${error}" class="error"></p>
+
+    <!-- Dashboard Statistics -->
+
+    <div class="dashboard">
+
+        <div class="card">
+            <h3>Total Trains</h3>
+            <p th:text="${totalTrains}">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Total Bookings</h3>
+            <p th:text="${totalBookings}">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Confirmed</h3>
+            <p th:text="${confirmedBookings}">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Cancelled</h3>
+            <p th:text="${cancelledBookings}">0</p>
+        </div>
+
+    </div>
+
+    <!-- Passenger Bookings -->
+
+    <h2>All Passenger Bookings</h2>
+
+    <!-- Search and Filter -->
+
+    <div class="booking-controls">
+
+        <input type="text"
+               id="searchInput"
+               placeholder="Search by PNR or passenger name...">
+
+        <select id="statusFilter">
+            <option value="ALL">All Bookings</option>
+            <option value="CONFIRMED">Confirmed</option>
+            <option value="CANCELLED">Cancelled</option>
+        </select>
+
+    </div>
+
+    <div th:if="${#lists.isEmpty(bookings)}">
+        <p>No bookings available.</p>
+    </div>
+
+    <!-- Booking Table -->
+
+    <div class="table-container"
+         th:if="${not #lists.isEmpty(bookings)}">
+
+        <table id="bookingTable">
+
+            <thead>
+                <tr>
+                    <th>PNR</th>
+                    <th>Passenger Name</th>
+                    <th>Email</th>
+                    <th>Age</th>
+                    <th>Train Number</th>
+                    <th>Train Name</th>
+                    <th>Journey Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr class="booking-row"
+                    th:each="booking : ${bookings}">
+
+                    <td th:text="${booking.pnr}"></td>
+
+                    <td th:text="${booking.passengerName}"></td>
+
+                    <td th:text="${booking.email}"></td>
+
+                    <td th:text="${booking.age}"></td>
+
+                    <td th:text="${booking.train.trainNumber}"></td>
+
+                    <td th:text="${booking.train.trainName}"></td>
+
+                    <td th:text="${booking.journeyDate}"></td>
+
+                    <td>
+                        <span th:if="${booking.status == 'CONFIRMED'}"
+                              class="confirmed">
+                            CONFIRMED
+                        </span>
+
+                        <span th:if="${booking.status == 'CANCELLED'}"
+                              class="cancelled">
+                            CANCELLED
+                        </span>
+                    </td>
+
+                    <td>
+
+                        <!-- View Booking Details -->
+
+                        <a class="details-btn"
+                           th:href="@{/admin/booking-details/{pnr}(pnr=${booking.pnr})}">
+                            View Details
+                        </a>
+
+                        <!-- Cancel Booking -->
+
+                        <form th:if="${booking.status == 'CONFIRMED'}"
+                              th:action="@{/admin/cancel-booking/{pnr}(pnr=${booking.pnr})}"
+                              method="post">
+
+                            <button type="submit"
+                                    class="cancel-btn"
+                                    onclick="return confirm('Are you sure you want to cancel this booking?')">
+                                Cancel Booking
+                            </button>
+
+                        </form>
+
+                        <span th:if="${booking.status == 'CANCELLED'}">
+                            Already Cancelled
+                        </span>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- Pagination -->
+
+    <div class="pagination"
+         id="pagination"
+         th:if="${not #lists.isEmpty(bookings)}">
+
+        <button type="button" id="prevBtn">
+            Previous
+        </button>
+
+        <span id="pageInfo">Page 1</span>
+
+        <button type="button" id="nextBtn">
+            Next
+        </button>
+
+    </div>
+
+    <!-- Navigation -->
+
+    <div class="navigation">
+
+        <a th:href="@{/admin}">Add Train</a>
+
+        <a th:href="@{/admin/trains}">Manage Trains</a>
+
+        <a th:href="@{/}">Home</a>
+
+    </div>
+
+    <!-- JavaScript -->
+
+    <script>
+
+        const rows = Array.from(
+            document.querySelectorAll(".booking-row")
+        );
+
+        const searchInput =
+            document.getElementById("searchInput");
+
+        const statusFilter =
+            document.getElementById("statusFilter");
+
+        const prevBtn =
+            document.getElementById("prevBtn");
+
+        const nextBtn =
+            document.getElementById("nextBtn");
+
+        const pageInfo =
+            document.getElementById("pageInfo");
+
+        const rowsPerPage = 5;
+
+        let currentPage = 1;
+
+        let filteredRows = [];
+
+        // Search and Filter Bookings
+
+        function filterBookings() {
+
+            const searchValue =
+                searchInput.value.toLowerCase().trim();
+
+            const statusValue =
+                statusFilter.value;
+
+            filteredRows = rows.filter(row => {
+
+                const rowText =
+                    row.innerText.toLowerCase();
+
+                const status =
+                    row.cells[7].innerText.trim();
+
+                const matchesSearch =
+                    rowText.includes(searchValue);
+
+                const matchesStatus =
+                    statusValue === "ALL" ||
+                    status === statusValue;
+
+                return matchesSearch && matchesStatus;
+
+            });
+
+            currentPage = 1;
+
+            displayBookings();
+        }
+
+        // Display Bookings
+
+        function displayBookings() {
+
+            rows.forEach(row => {
+                row.style.display = "none";
+            });
+
+            const totalPages = Math.ceil(
+                filteredRows.length / rowsPerPage
+            );
+
+            const start =
+                (currentPage - 1) * rowsPerPage;
+
+            const end =
+                start + rowsPerPage;
+
+            filteredRows.slice(start, end).forEach(row => {
+                row.style.display = "";
+            });
+
+            pageInfo.innerText =
+                `Page ${totalPages === 0 ? 0 : currentPage} of ${totalPages}`;
+
+            prevBtn.disabled =
+                currentPage <= 1;
+
+            nextBtn.disabled =
+                currentPage >= totalPages ||
+                totalPages === 0;
+        }
+
+        // Search Event
+
+        searchInput.addEventListener(
+            "input",
+            filterBookings
+        );
+
+        // Status Filter Event
+
+        statusFilter.addEventListener(
+            "change",
+            filterBookings
+        );
+
+        // Previous Page
+
+        prevBtn.addEventListener("click", () => {
+
+            if (currentPage > 1) {
+
+                currentPage--;
+
+                displayBookings();
+            }
+
+        });
+
+        // Next Page
+
+        nextBtn.addEventListener("click", () => {
+
+            const totalPages = Math.ceil(
+                filteredRows.length / rowsPerPage
+            );
+
+            if (currentPage < totalPages) {
+
+                currentPage++;
+
+                displayBookings();
+            }
+
+        });
+
+        // Initial Display
+
+        filterBookings();
+
+    </script>
+
+</body>
+</html>

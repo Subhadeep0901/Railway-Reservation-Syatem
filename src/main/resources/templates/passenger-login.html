@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passenger Login</title>
+    <style>
+    
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #071a35, #123e70, #087ca7);
+    padding: 20px;
+}
+
+h2 {
+    color: white;
+    font-size: 32px;
+    margin-bottom: 25px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+form {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    color: #24364b;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #087ca7;
+    box-shadow: 0 0 5px rgba(8, 124, 167, 0.3);
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    background: #087ca7;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #07577d;
+}
+
+p {
+    margin-top: 18px;
+    color: white;
+    text-align: center;
+}
+
+p[style*="color:red"] {
+    color: #ffcccc !important;
+}
+
+p[style*="color:green"] {
+    color: #b6ffcf !important;
+}
+
+a {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+    </style>
+</head>
+<body>
+
+    <h2>Passenger Login</h2>
+
+    <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+    <p th:if="${message}" th:text="${message}" style="color:green;"></p>
+
+    <form th:action="@{/passenger/login}" method="post">
+
+        <label>Email:</label>
+        <input type="email" name="email" required>
+        <br><br>
+
+        <label>Password:</label>
+        <input type="password" name="password" required>
+        <br><br>
+
+        <button type="submit">Login</button>
+
+    </form>
+
+    <p>
+        Don't have an account?
+        <a th:href="@{/register}">Register here</a>
+    </p>
+
+   
+
+</body>
+</html>

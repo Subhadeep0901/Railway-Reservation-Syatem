@@ -1,0 +1,228 @@
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #e8f0ff, #f5f7fb);
+    min-height: 100vh;
+    color: #263238;
+    padding-bottom: 40px;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, #102a56, #1769aa);
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.header p {
+    font-size: 15px;
+    color: #dce9ff;
+}
+
+/* Main Container */
+.booking-container {
+    max-width: 1050px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+/* Train Information Card */
+.train-info {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+    border-top: 5px solid #1769aa;
+}
+
+.train-info h2 {
+    color: #102a56;
+    margin-bottom: 25px;
+    font-size: 22px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item span {
+    color: #687586;
+    font-size: 14px;
+}
+
+.info-item strong {
+    color: #263238;
+    font-size: 14px;
+    text-align: right;
+}
+
+/* Booking Form Card */
+.booking-form {
+    background: white;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+    border-top: 5px solid #18a572;
+}
+
+.booking-form h2 {
+    color: #102a56;
+    font-size: 23px;
+    margin-bottom: 25px;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #34445a;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d5dce7;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    background: #fbfcff;
+    color: #263238;
+    transition: 0.25s ease;
+}
+
+.form-group input:focus {
+    border-color: #1769aa;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.12);
+}
+
+.form-group input::placeholder {
+    color: #a0aab8;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 7px;
+    color: #718096;
+    font-size: 12px;
+}
+
+/* Error Message */
+.error-message {
+    background: #fff0f0;
+    color: #c62828;
+    border-left: 4px solid #e53935;
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #087e55, #16a36f);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: 0.3s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #066342, #087e55);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(8, 126, 85, 0.25);
+}
+
+.submit-btn:disabled {
+    background: #aab4c0;
+    cursor: not-allowed;
+}
+
+/* Back Button */
+.back-btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 18px;
+    padding: 13px;
+    border: 1px solid #1769aa;
+    border-radius: 8px;
+    color: #1769aa;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.back-btn:hover {
+    background: #1769aa;
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .booking-container {
+        grid-template-columns: 1fr;
+        margin: 25px auto;
+        gap: 20px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .train-info,
+    .booking-form {
+        padding: 25px 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .info-item {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .info-item strong {
+        text-align: left;
+    }
+}

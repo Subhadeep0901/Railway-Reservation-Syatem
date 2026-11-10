@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Trains | Railway Admin</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e8efff, #f5f7fb);
+            color: #263238;
+            padding: 35px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid #1769aa;
+        }
+
+        h1 {
+            text-align: center;
+            color: #102a56;
+            font-size: 29px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .top-link {
+            display: inline-block;
+            margin-bottom: 22px;
+            padding: 11px 18px;
+            background: #1769aa;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .top-link:hover {
+            background: #102a56;
+        }
+
+        .message {
+            padding: 13px;
+            border-radius: 7px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .success {
+            background: #e8f8ef;
+            color: #16834a;
+        }
+
+        .error {
+            background: #fff0f0;
+            color: #c62828;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 9px;
+            border: 1px solid #e2e8f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        thead {
+            background: #102a56;
+            color: white;
+        }
+
+        th {
+            padding: 16px 13px;
+            font-size: 13px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 15px 13px;
+            border-bottom: 1px solid #edf0f5;
+            font-size: 14px;
+        }
+
+        tbody tr:hover {
+            background: #f5f8fd;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .active {
+            background: #e8f8ef;
+            color: #16834a;
+        }
+
+        .inactive {
+            background: #fff0f0;
+            color: #c62828;
+        }
+
+        .action-cell {
+            white-space: nowrap;
+        }
+
+        .edit-btn {
+            display: inline-block;
+            padding: 8px 13px;
+            background: #1769aa;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .edit-btn:hover {
+            background: #102a56;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .deactivate-btn {
+            background: #dc3545;
+        }
+
+        .deactivate-btn:hover {
+            background: #b02a37;
+        }
+
+        .activate-btn {
+            background: #198754;
+        }
+
+        .activate-btn:hover {
+            background: #146c43;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 30px;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px 10px;
+            }
+
+            .container {
+                padding: 20px 12px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Manage Trains</h1>
+        <p class="subtitle">View, edit and manage railway trains</p>
+
+        <a th:href="@{/admin/dashboard}" class="top-link">
+            ← Back to Dashboard
+        </a>
+
+        <p class="message success"
+           th:if="${message}"
+           th:text="${message}">
+        </p>
+
+        <p class="message error"
+           th:if="${error}"
+           th:text="${error}">
+        </p>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Train Number</th>
+                        <th>Train Name</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Total Seats</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr th:each="train : ${trains}">
+
+                        <td th:text="${train.trainNumber}"></td>
+
+                        <td th:text="${train.trainName}"></td>
+
+                        <td th:text="${train.source}"></td>
+
+                        <td th:text="${train.destination}"></td>
+
+                        <td th:text="${train.totalSeats}"></td>
+
+                        <td>
+                            <span class="status"
+                                  th:classappend="${train.active ? 'active' : 'inactive'}"
+                                  th:text="${train.active ? 'Active' : 'Inactive'}">
+                            </span>
+                        </td>
+
+                        <td class="action-cell">
+
+                            <a th:href="@{/admin/edit-train/{id}(id=${train.id})}"
+                               class="edit-btn">
+                                Edit
+                            </a>
+
+                            <form th:action="@{/admin/deactivate-train/{id}(id=${train.id})}"
+                                  method="post"
+                                  th:if="${train.active}"
+                                  style="display:inline;">
+
+                                <button type="submit"
+                                        class="deactivate-btn"
+                                        onclick="return confirm('Deactivate this train?')">
+                                    Deactivate
+                                </button>
+
+                            </form>
+
+                            <form th:action="@{/admin/activate-train/{id}(id=${train.id})}"
+                                  method="post"
+                                  th:unless="${train.active}"
+                                  style="display:inline;">
+
+                                <button type="submit" class="activate-btn">
+                                    Activate
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(trains)}">
+                        <td colspan="7" class="empty-message">
+                            No trains found.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

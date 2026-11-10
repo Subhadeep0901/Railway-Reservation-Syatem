@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin - Add Train</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e8efff, #f5f7fb);
+            color: #263238;
+            padding: 35px 20px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 35px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid #1769aa;
+        }
+
+        h1 {
+            text-align: center;
+            color: #102a56;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1769aa;
+            font-size: 21px;
+            margin-bottom: 25px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #34445a;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d5dce7;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #fbfcff;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #1769aa;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.12);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #1769aa, #102a56);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 42, 86, 0.2);
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 7px;
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .success {
+            background: #e8f8ef;
+            color: #16834a;
+        }
+
+        .error {
+            background: #fff0f0;
+            color: #c62828;
+        }
+
+        .links {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .links a {
+            display: block;
+            text-align: center;
+            padding: 12px;
+            border: 1px solid #1769aa;
+            border-radius: 8px;
+            color: #1769aa;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .links a:hover {
+            background: #1769aa;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Railway Admin Panel</h1>
+        <p class="subtitle">Manage your railway system</p>
+
+        <h2>Add New Train</h2>
+
+        <p class="message success"
+           th:if="${message}"
+           th:text="${message}">
+        </p>
+
+        <p class="message error"
+           th:if="${error}"
+           th:text="${error}">
+        </p>
+
+        <form th:action="@{/admin/add-train}" method="post">
+
+            <div class="form-group">
+                <label>Train Number</label>
+                <input type="text"
+                       name="trainNumber"
+                       placeholder="Enter train number"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Train Name</label>
+                <input type="text"
+                       name="trainName"
+                       placeholder="Enter train name"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Source</label>
+                <input type="text"
+                       name="source"
+                       placeholder="Enter source station"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Destination</label>
+                <input type="text"
+                       name="destination"
+                       placeholder="Enter destination station"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Departure Time</label>
+                <input type="time"
+                       name="departureTime"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Arrival Time</label>
+                <input type="time"
+                       name="arrivalTime"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Total Seats</label>
+                <input type="number"
+                       name="totalSeats"
+                       min="1"
+                       placeholder="Enter total seats"
+                       required>
+            </div>
+
+            <button type="submit">Add Train</button>
+
+        </form>
+
+        <div class="links">
+
+            <a th:href="@{/admin/dashboard}">
+                View Admin Dashboard
+            </a>
+
+            <a th:href="@{/}">
+                Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
